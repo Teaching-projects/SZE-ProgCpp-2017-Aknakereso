@@ -50,3 +50,19 @@ void Matrix::hideMines(int count) {
 		}
 	}
 }
+
+char Matrix::MinesAround(char X, char Y) const {
+	const signed char dX[8] = { -1,  0, +1, -1, +1, -1,  0, +1 };
+	const signed char dY[8] = { -1, -1, -1,  0,  0, +1, +1, +1 };
+	char mines = 0;
+	char i;
+
+	for (i = 0; i < 8; ++i) {
+		if ((X + dX[i] >= 0) && (X + dX[i] < Matrix::values[i].size()) &&
+			(Y + dY[i] >= 0) && (Y + dY[i] < Matrix::values.size()) &&
+			(Matrix::values[Y + dY[i]][X + dX[i]] == HIDDEN_MINE)) {
+			++mines;
+		}
+	}
+	return mines;
+}

@@ -5,9 +5,6 @@
 
 #include <vector>
 
-/**
-	Mátrix osztály egy pálya állapotának tárolásához
-**/
 class Matrix
 {
 public:
@@ -15,6 +12,7 @@ public:
 	void init();
 	void print() const;
 	void hideMines(int count);
+	char MinesAround(char X, char Y) const; // TODO: move this to private
 
 private:
 	std::vector< std::vector<char> > values;
