@@ -14,6 +14,7 @@ public:
 	Matrix(int rows, int cols);
 	void init();
 	void print() const;
+	void hideMines(int count);
 
 private:
 	std::vector< std::vector<char> > values;

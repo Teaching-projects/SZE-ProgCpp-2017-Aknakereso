@@ -34,3 +34,19 @@ void Matrix::print() const {
 		std::cout << std::endl;
 	}
 }
+
+void Matrix::hideMines(int count) {
+	if (count < Matrix::values.size() * Matrix::values[0].size()) {
+		int i = 0;
+
+		while (i < count) {
+			int x, y;
+			x = rand() % Matrix::values[0].size();
+			y = rand() % Matrix::values.size();
+			if (Matrix::values[y][x] == HIDDEN_FIELD) {
+				Matrix::values[y][x] = HIDDEN_MINE;
+				++i;
+			}
+		}
+	}
+}
