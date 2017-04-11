@@ -11,6 +11,7 @@ public:
 	Matrix(int rows, int cols);
 	void init();
 	void print() const;
+	void printM(int posX, int posY) const;
 	void hideMines(int count);
 	char MinesAround(char X, char Y) const; // TODO: move this to private
 

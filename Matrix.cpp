@@ -35,6 +35,49 @@ void Matrix::print() const {
 	}
 }
 
+void Matrix::printM(int posX, int posY) const {
+	int i, j;
+	int rows = values.size();
+	int cols = values[0].size();
+	short color;
+
+//	GetColor(color);
+
+	// Upper frame
+	putchar(-55);
+	for (i = 0; i < cols; i++) {
+		putchar(-51);
+	}
+	putchar(-69);
+	std::cout << std::endl;
+
+	// Vector elements
+	for (i = 0; i < rows; i++) {
+		cols = values[i].size();
+		putchar(-70);
+		for (j = 0; j < cols; j++) {
+			if (j == posX && i == posY) {
+//				SetColor(-color & 0x00FF);
+				std::cout << (int)values[i][j];
+//				SetColor(color);
+			}
+			else {
+				std::cout << (int)values[i][j];
+			}
+		}
+		putchar(-70);
+		std::cout << std::endl;
+	}
+
+	// Bottom frame
+	putchar(-56);
+	for (i = 0; i < cols; i++) {
+		putchar(-51);
+	}
+	putchar(-68);
+	std::cout << std::endl;
+}
+
 void Matrix::hideMines(int count) {
 	if (count < Matrix::values.size() * Matrix::values[0].size()) {
 		int i = 0;
