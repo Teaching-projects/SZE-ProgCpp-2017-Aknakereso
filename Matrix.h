@@ -13,7 +13,6 @@ public:
 	void print() const;
 	void printM(int posX, int posY) const;
 	void hideMines(int count);
-	char MinesAround(char X, char Y) const; // TODO: move this to private
 
 private:
 	std::vector< std::vector<char> > values;
@@ -31,6 +30,7 @@ private:
 	const char HIDDEN_MINE		= 11;	// Unrevealed mine
 	const char MARK_FLAG		= 12;	// Unrevealed field marked as mine
 	const char MARK_SAFE		= 13;	// Unrevealed field marked as safe
+	char MinesAround(char X, char Y) const;
 
 };
 

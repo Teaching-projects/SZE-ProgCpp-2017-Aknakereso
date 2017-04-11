@@ -1,7 +1,8 @@
 // Implemantation of class Matrix
 
-#include "Matrix.h"
 #include <iostream>
+#include "Matrix.h"
+#include "WinConsole.h"
 
 Matrix::Matrix(int rows, int cols)
 {
@@ -35,13 +36,14 @@ void Matrix::print() const {
 	}
 }
 
+// Print matrix with frame and selection
 void Matrix::printM(int posX, int posY) const {
 	int i, j;
 	int rows = values.size();
 	int cols = values[0].size();
 	short color;
 
-//	GetColor(color);
+	GetColor(color);
 
 	// Upper frame
 	putchar(-55);
@@ -57,12 +59,12 @@ void Matrix::printM(int posX, int posY) const {
 		putchar(-70);
 		for (j = 0; j < cols; j++) {
 			if (j == posX && i == posY) {
-//				SetColor(-color & 0x00FF);
-				std::cout << (int)values[i][j];
-//				SetColor(color);
+				SetColor(-color & 0x00FF);
+				std::cout << (int)(values[i][j] - 10);
+				SetColor(color);
 			}
 			else {
-				std::cout << (int)values[i][j];
+				std::cout << (int)(values[i][j] - 10);
 			}
 		}
 		putchar(-70);
