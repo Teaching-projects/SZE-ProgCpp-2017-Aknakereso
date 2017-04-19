@@ -3,8 +3,6 @@
 #include "Matrix.h"
 #include <Windows.h>
 
-#define ROWS 10
-#define COLS 20
 #define KB_ENTER	13 // 0x0D
 #define KB_ESCAPE	27 // 0x1B
 #define KB_UP		72 // 0x48
@@ -12,9 +10,17 @@
 #define KB_RIGHT	77 // 0x4D
 #define KB_DOWN		80 // 0x50
 
+void NewGame(int rows, int cols);
 
-void main(void) {
-	Matrix m1{ ROWS, COLS };
+
+int main(int argc, char *argv[]) {
+	NewGame(10, 20);
+	return 0;
+}
+
+
+void NewGame(int rows, int cols) {
+	Matrix m1{ rows, cols };
 	int x = 0, y = 0;
 	char c;
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -28,11 +34,11 @@ void main(void) {
 		m1.printM(x, y);
 		c = _getch();
 		switch (c) {
-		case KB_LEFT: if (x > 0) --x; break;
-		case KB_RIGHT: if (x < COLS - 1) ++x; break;
-		case KB_UP: if (y > 0) --y; break;
-		case KB_DOWN: if (y < ROWS - 1) ++y; break;
-		case KB_ENTER: break;
+		case KB_LEFT	: if (x > 0) --x; break;
+		case KB_RIGHT	: if (x < cols - 1) ++x; break;
+		case KB_UP		: if (y > 0) --y; break;
+		case KB_DOWN	: if (y < rows - 1) ++y; break;
+		case KB_ENTER	: m1.selectField(x, y); break;
 		}
 	} while (c != KB_ESCAPE);
 }

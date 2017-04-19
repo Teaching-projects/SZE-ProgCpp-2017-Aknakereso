@@ -13,9 +13,11 @@ public:
 	void print() const;
 	void printM(int posX, int posY) const;
 	void hideMines(int count);
+	void selectField(int x, int y);
 
 private:
 	std::vector< std::vector<char> > values;
+	int Mines;
 	const char FIELD_0			= 0;	// Revealed field, no mines around
 	const char FIELD_1			= 1;	// Revealed field, 1 mine around
 	const char FIELD_2			= 2;	// Revealed field, 2 mines around

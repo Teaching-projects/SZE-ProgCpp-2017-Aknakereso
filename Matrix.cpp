@@ -60,12 +60,29 @@ void Matrix::printM(int posX, int posY) const {
 		for (j = 0; j < cols; j++) {
 			if (j == posX && i == posY) {
 				SetColor(-color & 0x00FF);
-				std::cout << (int)(values[i][j] - 10);
+			}
+
+			switch (values[i][j]) {
+			case 0: std::cout << ' '; break;
+			case 1: std::cout << '1'; break;
+			case 2: std::cout << '2'; break;
+			case 3: std::cout << '3'; break;
+			case 4: std::cout << '4'; break;
+			case 5: std::cout << '5'; break;
+			case 6: std::cout << '6'; break;
+			case 7: std::cout << '7'; break;
+			case 8: std::cout << '8'; break;
+			case 9: std::cout << '*'; break;
+			case 10: std::cout << '#'; break;
+			case 11: std::cout << 'O'; break;
+			case 12: std::cout << '!'; break;
+			case 13: std::cout << '?'; break;
+			}
+
+			if (j == posX && i == posY) {
 				SetColor(color);
 			}
-			else {
-				std::cout << (int)(values[i][j] - 10);
-			}
+
 		}
 		putchar(-70);
 		std::cout << std::endl;
@@ -82,6 +99,7 @@ void Matrix::printM(int posX, int posY) const {
 
 void Matrix::hideMines(int count) {
 	if (count < Matrix::values.size() * Matrix::values[0].size()) {
+		Matrix::Mines = count;
 		int i = 0;
 
 		while (i < count) {
@@ -96,6 +114,7 @@ void Matrix::hideMines(int count) {
 	}
 }
 
+// Returns how many mines there are around a field
 char Matrix::MinesAround(char X, char Y) const {
 	const signed char dX[8] = { -1,  0, +1, -1, +1, -1,  0, +1 };
 	const signed char dY[8] = { -1, -1, -1,  0,  0, +1, +1, +1 };
@@ -110,4 +129,51 @@ char Matrix::MinesAround(char X, char Y) const {
 		}
 	}
 	return mines;
+}
+
+void Matrix::selectField(int x, int y) {
+	const char dX[8] = { -1,  0, +1, -1, +1, -1,  0, +1 };
+	const char dY[8] = { -1, -1, -1,  0,  0, +1, +1, +1 };
+
+	unsigned char i;
+	unsigned short dlg;
+
+	int Clear = 0;
+	int mines = Matrix::Mines;
+	int Rows = Matrix::values.size();
+	int Cols = Matrix::values[0].size();
+
+
+	if (values[y][x] == HIDDEN_FIELD)			// Ha üres helyet választottunk, akkor
+		if (values[y][x] == HIDDEN_MINE) {		// ha a válsztott mezõn akna van, akkor
+			values[y][x] = MINE;				// mutassuk meg az aknát, és
+			printM(x, y);
+			putchar(7);
+			std::cout << "Game over!\n";      	// vége a játéknak.
+			//NewGame();                       	// új játék kezdése.
+		}
+		else {
+			if (MinesAround(x, y) > 0) {			// Egyébként ha van körülötte akna, akkor
+				values[y][x] = MinesAround(x, y);	// mutassa, hogy mennyi.
+				++Clear;
+			}
+			else {				// Amúgy nézze meg a körülötte lévõket.
+				values[y][x] = FIELD_0;
+				++Clear;
+				for (i = 0; i < 8; i++) {
+					if ((x + dX[i] >= 0) && (x + dX[i] < Cols) &&
+						(y + dY[i] >= 0) && (y + dY[i] < Rows)) {
+						selectField(x + dX[i], y + dY[i]);
+					}
+				}
+			}
+			if (Clear + mines == Rows * Cols) {	// Megtaláltuk-e az össze aknát?
+				printM(x, y);
+/*				std::cout << "Kezdesz új játékot?" << std::endl;
+				if (getchar() = 'y') {
+					NewGame;
+				}*/
+			}
+		}
+
 }
