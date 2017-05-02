@@ -13,7 +13,7 @@ public:
 	void print() const;
 	void printM(int posX, int posY) const;
 	void hideMines(int count);
-	void selectField(int x, int y);
+	int selectField(int x, int y);
 
 private:
 	std::vector< std::vector<char> > values;
