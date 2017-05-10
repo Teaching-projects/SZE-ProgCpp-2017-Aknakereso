@@ -3,7 +3,7 @@
 
 #include <Windows.h>
 
-bool GetColor(short &color) {
+static bool GetColor(short &color) {
 	CONSOLE_SCREEN_BUFFER_INFO info;
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info))
 		return false;
@@ -11,7 +11,7 @@ bool GetColor(short &color) {
 	return true;
 }
 
-bool SetColor(short color) {
+static bool SetColor(short color) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	return SetConsoleTextAttribute(hConsole, color);
 }
