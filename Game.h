@@ -12,7 +12,7 @@ private:
 
 public:
 	Game();
-	void printM(int posX, int posY) const;
+	void printM(int x, int y) const;
 	int selectField(int x, int y);
 	void markField(int x, int y);
 	int GetCols() const;

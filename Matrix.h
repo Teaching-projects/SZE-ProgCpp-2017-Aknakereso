@@ -8,7 +8,6 @@ class Matrix : public Game
 {
 public:
 	Matrix(int rows, int cols);
-	void init();
 	void hideMines(int count);
 
 };

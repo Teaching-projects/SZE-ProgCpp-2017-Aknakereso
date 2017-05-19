@@ -7,10 +7,9 @@ void NewGame(Game& g1);
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
 		Matrix m{ 10, 20 };
-		m.init();
 		m.hideMines(10);
 		NewGame(m);
-	} else {
+	} else if (argc == 2) {
 		LoadedGame g {};
 		g.LoadFromFile(argv[1]);
 		NewGame(g);
@@ -21,13 +20,13 @@ int main(int argc, char *argv[]) {
 
 #define KB_ENTER	13
 #define KB_ESCAPE	27
+#define KB_SPACE	32
 #define KB_UP		72
 #define KB_LEFT		75
 #define KB_RIGHT	77
 #define KB_DOWN		80
 #define KB_b		98
 #define KB_c		99
-#define KB_q		113
 #define KB_B		67
 #define KB_C		68
 #define STATUS_DEAD -1
@@ -56,7 +55,7 @@ void NewGame(Game& g1) {
 			case KB_c: SelectForegroudColor(); break;
 			case KB_B: SelectBackgroudColor(); break;
 			case KB_C: SelectForegroudColor(); break;
-			case KB_q: g1.markField(x, y); break;
+			case KB_SPACE: g1.markField(x, y); break;
 		}
 	} while (c != KB_ESCAPE && status == STATUS_ALIVE);
 

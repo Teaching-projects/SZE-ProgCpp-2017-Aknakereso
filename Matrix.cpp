@@ -7,17 +7,7 @@ Matrix::Matrix(int rows, int cols)
 	Values.resize(rows);
 	for (int y = 0; y < rows; ++y) {
 		Values[y].resize(cols);
-		for (int x = 0; x < rows; ++x) {
-			Values[y][x] = HIDDEN_FIELD;
-		}
-	}
-}
-
-void Matrix::init() {
-	int x, y;
-
-	for (y = 0; y < Rows; ++y) {
-		for (x = 0; x < Cols; ++x) {
+		for (int x = 0; x < cols; ++x) {
 			Values[y][x] = HIDDEN_FIELD;
 		}
 	}
