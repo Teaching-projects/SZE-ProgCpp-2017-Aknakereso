@@ -39,9 +39,11 @@ void Game::printM(int posX, int posY) const {
 			case 8: std::cout << '8'; break;
 			case 9: std::cout << '*'; break;
 			case 10: std::cout << '#'; break;
-			case 11: std::cout << 'O'; break;
+			case 11: std::cout << '#'; break;
 			case 12: std::cout << '!'; break;
-			case 13: std::cout << '?'; break;
+			case 13: std::cout << '!'; break;
+			case 14: std::cout << '?'; break;
+			case 15: std::cout << '?'; break;
 			}
 
 			if (j == posX && i == posY) {
@@ -62,18 +64,22 @@ void Game::printM(int posX, int posY) const {
 	std::cout << std::endl;
 }
 
-char Game::MinesAround(char X, char Y) const {
+char Game::MinesAround(char x, char y) const {
 	const char dX[8] = { -1,  0, +1, -1, +1, -1,  0, +1 };
 	const char dY[8] = { -1, -1, -1,  0,  0, +1, +1, +1 };
 	char mines = 0;
 	int i;
 
 	for (i = 0; i < 8; ++i) {
-		if ((X + dX[i] >= 0) && (X + dX[i] < Cols) &&
-			(Y + dY[i] >= 0) && (Y + dY[i] < Rows) &&
-			(Values[Y + dY[i]][X + dX[i]] == HIDDEN_MINE)) {
+		/*if ((x + dX[i] >= 0) && (x + dX[i] < Cols) &&
+			(y + dY[i] >= 0) && (y + dY[i] < Rows) &&
+			(isMine(Values[y + dY[i]][x + dX[i]]))) {
 			++mines;
-		}
+		}*/
+		mines += (
+			(x + dX[i] >= 0) && (x + dX[i] < Cols) &&
+			(y + dY[i] >= 0) && (y + dY[i] < Rows) &&
+			(isMine(Values[y + dY[i]][x + dX[i]])));
 	}
 	return mines;
 }
@@ -84,7 +90,8 @@ int Game::selectField(int x, int y) {
 
 	char i;
 
-	if (Values[y][x] >= 10/*== HIDDEN_FIELD*/) {	// Ha üres helyet választottunk, akkor
+	if (Values[y][x] >= 10 &&
+		Values[y][x] < 12 /*== HIDDEN_FIELD*/) {// Ha üres helyet választottunk, akkor
 		if (Values[y][x] == HIDDEN_MINE) {		// ha a válsztott mezõn akna van, akkor
 			Values[y][x] = MINE;				// mutassuk meg az aknát, és
 			printM(x, y);
@@ -119,4 +126,19 @@ int Game::GetCols() const {
 
 int Game::GetRows() const {
 	return Rows;
+}
+
+void Game::markField(int x, int y) {
+	if (Values[y][x] >= 10/*== HIDDEN_FIELD*/) {
+		if (Values[y][x] < 14) {
+			Values[y][x] += 2;
+		} else {
+			Values[y][x] -= 4;
+		}
+		printM(x, y);
+	}
+}
+
+bool Game::isMine(char f) const {
+	return (f & 0x09) == 0x09;
 }

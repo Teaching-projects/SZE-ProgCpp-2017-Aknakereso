@@ -7,10 +7,14 @@
 
 class Game
 {
+private:
+	bool isMine(char f) const;
+
 public:
 	Game();
 	void printM(int posX, int posY) const;
 	int selectField(int x, int y);
+	void markField(int x, int y);
 	int GetCols() const;
 	int GetRows() const;
 
@@ -30,11 +34,13 @@ protected:
 	const char FIELD_6 = 6;	// Revealed field, 6 mines around
 	const char FIELD_7 = 7;	// Revealed field, 7 mines around
 	const char FIELD_8 = 8;	// Revealed field, 8 mines around
-	const char MINE = 9;	// Revealed mine
-	const char HIDDEN_FIELD = 10;	// Unrevealed field
-	const char HIDDEN_MINE = 11;	// Unrevealed mine
-	const char MARK_FLAG = 12;	// Unrevealed field marked as mine
-	const char MARK_SAFE = 13;	// Unrevealed field marked as safe
+	const char MINE				= 9;	// Revealed mine
+	const char HIDDEN_FIELD		= 10;	// Unrevealed clear
+	const char HIDDEN_MINE		= 11;	// Unrevealed mine
+	const char MARK_FLAG_CLEAR	= 12;	// Unrevealed clear field marked as mine
+	const char MARK_FLAG_MINE	= 13;	// Unrevealed mine marked as mine
+	const char MARK_SAFE_CLEAR	= 14;	// Unrevealed clear field marked as safe
+	const char MARK_SAFE_MINE	= 15;	// Unrevealed mine marked as safe
 	char MinesAround(char X, char Y) const;
 };
 
