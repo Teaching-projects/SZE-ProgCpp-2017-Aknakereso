@@ -5,6 +5,7 @@ LoadedGame::LoadedGame() {}
 int LoadedGame::LoadFromFile(char *FileName) {
 	std::ifstream F;
 	std::string s;
+	int filesize;
 
 	F.open(FileName);
 	if (F.is_open()) {
@@ -12,7 +13,8 @@ int LoadedGame::LoadFromFile(char *FileName) {
 		std::getline(F, s);
 		Cols = s.length();
 		F.seekg(0, F.end);
-		Rows = F.tellg() / Cols - 1;
+		filesize = static_cast<int>(F.tellg()) - Cols * 2;// Filesize without end of line
+		Rows = filesize / Cols;
 		F.seekg(0, F.beg);
 		// Resize vector
 		int y;

@@ -2,6 +2,12 @@
 #include "LoadedGame.h"
 #include "WinConsole2.h"
 
+#define MIN_WIDTH 5
+#define MIN_HEIGHT 5
+#define MIN_MINES 5
+#define MAX_WIDTH 30
+#define MAX_HEIGHT 30
+
 void NewGame(Game& g1);
 
 int main(int argc, char *argv[]) {
@@ -13,6 +19,13 @@ int main(int argc, char *argv[]) {
 		LoadedGame g {};
 		g.LoadFromFile(argv[1]);
 		NewGame(g);
+	} else if (argc == 4) {
+		int Rows = min(max(MIN_HEIGHT, atoi(argv[1])), MAX_HEIGHT);
+		int Cols = min(max(MIN_WIDTH, atoi(argv[2])), MAX_WIDTH);
+		Matrix m{ Rows, Cols };
+		int Mines = min(max(MIN_MINES, atoi(argv[3])), Rows * Cols * 0.2);
+		m.hideMines(Mines);
+		NewGame(m);
 	}
 	return 0;
 }
@@ -36,7 +49,7 @@ int main(int argc, char *argv[]) {
 void NewGame(Game& g1) {
 	int x = 0;
 	int y = 0;
-	int status = 0;
+	int status = STATUS_ALIVE;
 	char c;
 	short OriginalColor;
 	GetColor(OriginalColor);
@@ -58,7 +71,6 @@ void NewGame(Game& g1) {
 			case KB_SPACE: g1.markField(x, y); break;
 		}
 	} while (c != KB_ESCAPE && status == STATUS_ALIVE);
-
 
 	if (status == STATUS_DEAD) {
 		std::cout << static_cast<char>(7) << "GAME OVER!" << std::endl;
