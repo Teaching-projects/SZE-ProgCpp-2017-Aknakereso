@@ -8,8 +8,12 @@
 class LoadedGame : public Game
 {
 public:
-	LoadedGame();
-	int LoadFromFile(char *FileName);
+	int FileOK;
+	LoadedGame(char *filename);
+
+private:
+	char *FileName;
+	int LoadFromFile();
 
 };
 

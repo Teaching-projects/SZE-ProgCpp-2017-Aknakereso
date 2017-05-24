@@ -1,9 +1,10 @@
 #include "Matrix.h"
 
-Matrix::Matrix(int rows, int cols)
+Matrix::Matrix(int rows, int cols, int mines)
 {
 	Rows = rows;
 	Cols = cols;
+	Mines = mines;
 	Values.resize(rows);
 	for (int y = 0; y < rows; ++y) {
 		Values[y].resize(cols);
@@ -11,15 +12,15 @@ Matrix::Matrix(int rows, int cols)
 			Values[y][x] = HIDDEN_FIELD;
 		}
 	}
+	hideMines();
 }
 
-void Matrix::hideMines(int count) {
+void Matrix::hideMines() {
 	srand(time(NULL));
-	if (count < Rows * Cols) {
-		Mines = count;
+	if (Mines < Rows * Cols) {
 		int i = 0;
 
-		while (i < count) {
+		while (i < Mines) {
 			int x, y;
 			x = rand() % Cols;
 			y = rand() % Rows;

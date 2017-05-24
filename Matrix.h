@@ -7,8 +7,10 @@
 class Matrix : public Game
 {
 public:
-	Matrix(int rows, int cols);
-	void hideMines(int count);
+	Matrix(int rows, int cols, int mines);
+
+private:
+	void hideMines();
 
 };
 

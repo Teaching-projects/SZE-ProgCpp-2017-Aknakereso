@@ -1,8 +1,10 @@
 #include "LoadedGame.h"
 
-LoadedGame::LoadedGame() {}
+LoadedGame::LoadedGame(char *filename) : FileName(filename) {
+	FileOK = LoadFromFile();
+}
 
-int LoadedGame::LoadFromFile(char *FileName) {
+int LoadedGame::LoadFromFile() {
 	std::ifstream F;
 	std::string s;
 	int filesize;
@@ -38,10 +40,10 @@ int LoadedGame::LoadFromFile(char *FileName) {
 		}
 		F.close();
 		std::cout << Cols << " " << Rows << ' ' << Mines << std::endl;
-		return 0;
+		return 1;
 	}
 	else {
-		std::cout << "Unable to open file";
-		return 1;
+		std::cout << "Unable to open file: " << FileName;
+		return 0;
 	}
 }

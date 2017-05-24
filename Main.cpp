@@ -2,29 +2,30 @@
 #include "LoadedGame.h"
 #include "WinConsole2.h"
 
-#define MIN_WIDTH 5
-#define MIN_HEIGHT 5
-#define MIN_MINES 5
-#define MAX_WIDTH 30
-#define MAX_HEIGHT 30
+#define MIN_WIDTH	5
+#define MIN_HEIGHT	5
+#define MIN_MINES	5
+#define MAX_WIDTH	30
+#define MAX_HEIGHT	30
 
 void NewGame(Game& g1);
 
 int main(int argc, char *argv[]) {
+	// Default game
 	if (argc == 1) {
-		Matrix m{ 10, 20 };
-		m.hideMines(10);
+		Matrix m{ 10, 20, 10 };
 		NewGame(m);
+	// Game loaded from file
 	} else if (argc == 2) {
-		LoadedGame g {};
-		g.LoadFromFile(argv[1]);
+		LoadedGame g { argv[1] };
+		if (g.FileOK == 0) return 1; 
 		NewGame(g);
+	// Custom game
 	} else if (argc == 4) {
 		int Rows = min(max(MIN_HEIGHT, atoi(argv[1])), MAX_HEIGHT);
 		int Cols = min(max(MIN_WIDTH, atoi(argv[2])), MAX_WIDTH);
-		Matrix m{ Rows, Cols };
 		int Mines = min(max(MIN_MINES, atoi(argv[3])), Rows * Cols * 0.2);
-		m.hideMines(Mines);
+		Matrix m{ Rows, Cols, Mines };
 		NewGame(m);
 	}
 	return 0;
