@@ -27,17 +27,17 @@ int main(int argc, char *argv[]) {
 		int Mines = min(max(MIN_MINES, atoi(argv[3])), Rows * Cols * 0.2);
 		// Messages on wrong parameter
 		if (atoi(argv[1]) < MIN_HEIGHT || atoi(argv[1]) > MAX_HEIGHT) {
-			std::cout << "Number of rows (argument 1) must be betwheen "
+			std::cout << "Number of rows (argument 1) must be between "
 				<< MIN_HEIGHT << " and " << MAX_HEIGHT << "! "
 				<< "Using " << Rows << std::endl;
 		}
 		if (atoi(argv[2]) < MIN_WIDTH || atoi(argv[2]) > MAX_WIDTH) {
-			std::cout << "Number of columns (argument 2) must be betwheen "
+			std::cout << "Number of columns (argument 2) must be between "
 				<< MIN_WIDTH << " and " << MAX_WIDTH << "! "
 				<< "Using " << Cols << std::endl;
 		}
 		if (atoi(argv[3]) < MIN_MINES || atoi(argv[3]) > Rows * Cols * 0.2) {
-			std::cout << "Number of mines (argument 3) must be betwheen "
+			std::cout << "Number of mines (argument 3) must be between "
 				<< MIN_MINES << " and " << (Rows * Cols * 0.2) << "! "
 				<< "Using " << Mines << std::endl;
 		}
