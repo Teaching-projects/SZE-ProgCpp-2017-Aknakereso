@@ -47,7 +47,7 @@ void ClearScreen(void) {
 
 	// Get the number of cells in the current buffer
 	if (!GetConsoleScreenBufferInfo(hStdOut, &csbi)) return;
-	cellCount = csbi.dwSize.X *csbi.dwSize.Y;
+	cellCount = csbi.dwSize.X * csbi.dwSize.Y;
 
 	// Fill the entire buffer with spaces
 	if (!FillConsoleOutputCharacter(
@@ -66,7 +66,10 @@ void ClearScreen(void) {
 short SelectForegroudColor(void) {
 	char x = 0, y = 0, c = 0;
 	short CurrentColor;
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD homeCoords = { 0, 0 };
 
+	ClearScreen();
 	do {
 		switch (c) {
 		case KB_LEFT:	if (x > 0) --x; break;
@@ -74,12 +77,12 @@ short SelectForegroudColor(void) {
 		case KB_UP:		if (y > 0) --y; break;
 		case KB_DOWN:	if (y < 1) ++y; break;
 		}
-		ClearScreen();
+		SetConsoleCursorPosition(hStdOut, homeCoords);
 		PrintPalette(x, y);
 		c = _getch();
 	} while ((c != KB_ESCAPE) && (c != KB_ENTER));
 
-	if (c = KB_ENTER) {
+	if (c == KB_ENTER) {
 		GetColor(CurrentColor);
 		CurrentColor = CurrentColor & 0x00F0; // Background: unchanged, foreground: 0
 		CurrentColor = CurrentColor + x * 0x0001 + y * 0x0008;
@@ -91,8 +94,11 @@ short SelectForegroudColor(void) {
 
 short SelectBackgroudColor(void) {
 	char x = 0, y = 0, c = 0;
-	short CurrentColor;
+	short CurrentColor; 
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD homeCoords = { 0, 0 };
 
+	ClearScreen();
 	do {
 		switch (c) {
 		case KB_LEFT:	if (x > 0) --x; break;
@@ -100,15 +106,15 @@ short SelectBackgroudColor(void) {
 		case KB_UP:		if (y > 0) --y; break;
 		case KB_DOWN:	if (y < 1) ++y; break;
 		}
-		ClearScreen();
+		SetConsoleCursorPosition(hStdOut, homeCoords);
 		PrintPalette(x, y);
 		c = _getch();
 	} while ((c != KB_ESCAPE) && (c != KB_ENTER));
 
-	if (c = KB_ENTER) {
+	if (c == KB_ENTER) {
 		// Set background color only
 		GetColor(CurrentColor);
-		CurrentColor = CurrentColor & 0x000F;
+		CurrentColor = CurrentColor & 0x000F; // Foreground: unchanged, background: 0
 		CurrentColor = CurrentColor + x * 0x0010 + y * 0x0080;
 		SetColor(CurrentColor);
 	}

@@ -39,7 +39,13 @@ int LoadedGame::LoadFromFile() {
 			++y;
 		}
 		F.close();
-		std::cout << Cols << " " << Rows << ' ' << Mines << std::endl;
+		// Too many mines
+		if (Mines > 0.2 * Rows * Cols) {
+			std::cout << "This is a real hard game!" << std::endl;
+			std::cout << Cols << " columns, " << Rows << " rows, " << Mines << " mines!" << std::endl;
+			std::cout << "Press ENTER to continue!" << std::endl;
+			std::cin.ignore();
+		}
 		return 1;
 	}
 	else {
