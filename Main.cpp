@@ -12,7 +12,7 @@ void NewGame(Game& g1);
 
 int main(int argc, char *argv[]) {
 	// Default game
-	if (argc == 1) {
+	if (argc == 1 || argc > 4) {
 		Matrix m{ 10, 20, 10 };
 		NewGame(m);
 	// Game loaded from file
